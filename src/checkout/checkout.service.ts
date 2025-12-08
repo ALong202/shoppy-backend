@@ -12,6 +12,16 @@ export class CheckoutService {
   ) {}
   async createSession(productId: number) {
     const product = await this.productsService.getProduct(productId);
+
+    // ⚠️ LOG giá trị env trước khi dùng
+    console.log(
+      'STRIPE_SUCCESS_URL =',
+      this.configService.get('STRIPE_SUCCESS_URL'),
+    );
+    console.log(
+      'STRIPE_CANCEL_URL =',
+      this.configService.get('STRIPE_CANCEL_URL'),
+    );
     return this.stripe.checkout.sessions.create({
       metadata: {
         productId,
